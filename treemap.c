@@ -107,7 +107,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
     TreeNode* auxTemp = tree->root;
     TreeNode* auxParent = NULL;
 
-    while( auxTemp != NULL && auxTemp != node->pair->key){
+    while( auxTemp != NULL && auxTemp != node){
         auxParent = auxTemp;
         if (node->pair->key < auxTemp->pair->key){
             auxTemp = auxTemp->left;
@@ -134,6 +134,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         }
         free(auxTemp);
     }
+        
     else if (auxTemp->left == NULL || auxTemp->right == NULL){
         TreeNode* child;
 
