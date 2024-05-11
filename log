@@ -62,3 +62,9 @@ treemap.c:86:36: error: ‘current’ undeclared (first use in this function); d
       |                                    auxCurrent
 Compilation failed
 59af977
+Sat 11 May 2024 11:03:44 PM UTC: 
+ treemap.c | 54 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
+ tests:  11|6
+total_score: 15/70
+c02b8ca
