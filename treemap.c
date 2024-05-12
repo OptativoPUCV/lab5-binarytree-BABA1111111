@@ -104,73 +104,82 @@ TreeNode * minimum(TreeNode * x){
 
 
 void removeNode(TreeMap * tree, TreeNode* node) {
-    if (tree == NULL || node == NULL) {
-        return;
-    }
-
     TreeNode* auxTemp = tree->root;
     TreeNode* auxParent = NULL;
 
-    while (auxTemp != NULL && auxTemp != node) {
+    while( auxTemp != NULL && auxTemp != node){
         auxParent = auxTemp;
-        if (tree->lower_than(node->pair->key, auxTemp->pair->key)) {
+        if (tree->lower_than(node->pair->key, auxTemp->pair->key)){
             auxTemp = auxTemp->left;
         } else {
             auxTemp = auxTemp->right;
         }
     }
 
-    if (auxTemp == NULL) {
+    if (auxTemp == NULL){
         return;
     }
 
-    if (auxTemp->left == NULL && auxTemp->right == NULL) {
-        if (auxTemp != tree->root) {
-            if (auxParent->left == auxTemp) {
+    if (auxTemp->left == NULL && auxTemp->right == NULL){
+        if (auxTemp != tree->root){
+            if (auxParent->left == auxTemp){
                 auxParent->left = NULL;
-            } else {
+            }
+            else{
                 auxParent->right = NULL;
             }
-        } else {
+        }
+        else{
             tree->root = NULL;
         }
         free(auxTemp);
     }
         
-    else if (auxTemp->left == NULL || auxTemp->right == NULL) {
-        TreeNode* child = (auxTemp->left != NULL) ? auxTemp->left : auxTemp->right;
+    else if (auxTemp->left == NULL || auxTemp->right == NULL){
+        TreeNode* child;
 
-        if (!is_equal(tree, auxTemp->pair->key, auxParent->pair->key)) {
-            if (tree->lower_than(auxTemp->pair->key, auxParent->pair->key)) {
+        if (auxTemp->left != NULL){
+            child = auxTemp->left;
+        }
+        else{
+            child = auxTemp->right;
+        }
+            
+        if (!is_equal(tree, auxTemp->pair->key, auxParent->pair->key)){
+            if (tree->lower_than(auxTemp->pair->key, auxParent->pair->key)){
                 auxParent->left = child;
-            } else {
+            }
+            else{
                 auxParent->right = child;
             }
-        } else {
+        }
+        else{
             tree->root = child;
         }
         free(auxTemp);
     }
-        
-    else {
-        TreeNode* successor = minimum(auxTemp->right);
-        removeNode(tree, successor);
-        successor->parent = auxTemp->parent;
-        if (auxTemp->parent == NULL) {
-            tree->root = successor;
-        } else if (auxTemp == auxTemp->parent->left) {
-            auxTemp->parent->left = successor;
+    else{
+        TreeNode* succesor = minimum(auxTemp->right);
+        removeNode(tree, succesor);
+
+        succesor->parent = auxTemp->parent;
+
+        if (auxTemp->parent == NULL){
+            tree->root = succesor;
+        } else if (auxTemp == auxTemp->parent->left){
+            auxTemp->parent->left = succesor;
         } else {
-            auxTemp->parent->right = successor;
+            auxTemp->parent->right = succesor;
         }
 
-        auxTemp->pair->key = successor->pair->key;
-        auxTemp->pair->value = successor->pair->value;
-
-        free(successor);
+        if (succesor->right != NULL){
+            succesor->right->parent = succesor;
+        }
+        
+        auxTemp->pair->key = succesor->pair->key;
+        auxTemp->pair->value = succesor->pair->value;
     } 
 }
-
 
     
     // TreeNode* auxTemp = tree->root;
@@ -264,9 +273,31 @@ Pair * searchTreeMap(TreeMap * tree, void* key) {
 }
 
 
-Pair * upperBound(TreeMap * tree, void* key) {
+Pair* upperBound(TreeMap* tree, void* key) {
+    TreeNode* ub_node = NULL;
+    
+    if (tree == NULL) {
+        return NULL;
+    }
+
+    TreeNode* current = tree->root;
+    
+    while (current != NULL) {
+        if (tree->lower_than(key, current->pair->key) || is_equal(tree, key, current->pair->key)) {
+            ub_node = current;
+            current = current->left;
+        } else {
+            current = current->right;
+        }
+    }
+
+    if (ub_node != NULL) {
+        return ub_node->pair;
+    }
+
     return NULL;
 }
+
 
 Pair * firstTreeMap(TreeMap * tree) {
     TreeNode* auxFirst = minimum(tree->root);
