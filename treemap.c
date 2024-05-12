@@ -104,82 +104,73 @@ TreeNode * minimum(TreeNode * x){
 
 
 void removeNode(TreeMap * tree, TreeNode* node) {
+    if (tree == NULL || node == NULL) {
+        return;
+    }
+
     TreeNode* auxTemp = tree->root;
     TreeNode* auxParent = NULL;
 
-    while( auxTemp != NULL && auxTemp != node){
+    while (auxTemp != NULL && auxTemp != node) {
         auxParent = auxTemp;
-        if (tree->lower_than(node->pair->key, auxTemp->pair->key)){
+        if (tree->lower_than(node->pair->key, auxTemp->pair->key)) {
             auxTemp = auxTemp->left;
         } else {
             auxTemp = auxTemp->right;
         }
     }
 
-    if (auxTemp == NULL){
+    if (auxTemp == NULL) {
         return;
     }
 
-    if (auxTemp->left == NULL && auxTemp->right == NULL){
-        if (auxTemp != tree->root){
-            if (auxParent->left == auxTemp){
+    if (auxTemp->left == NULL && auxTemp->right == NULL) {
+        if (auxTemp != tree->root) {
+            if (auxParent->left == auxTemp) {
                 auxParent->left = NULL;
-            }
-            else{
+            } else {
                 auxParent->right = NULL;
             }
-        }
-        else{
+        } else {
             tree->root = NULL;
         }
         free(auxTemp);
     }
         
-    else if (auxTemp->left == NULL || auxTemp->right == NULL){
-        TreeNode* child;
+    else if (auxTemp->left == NULL || auxTemp->right == NULL) {
+        TreeNode* child = (auxTemp->left != NULL) ? auxTemp->left : auxTemp->right;
 
-        if (auxTemp->left != NULL){
-            child = auxTemp->left;
-        }
-        else{
-            child = auxTemp->right;
-        }
-            
-        if (!is_equal(tree, auxTemp->pair->key, auxParent->pair->key)){
-            if (tree->lower_than(auxTemp->pair->key, auxParent->pair->key)){
+        if (!is_equal(tree, auxTemp->pair->key, auxParent->pair->key)) {
+            if (tree->lower_than(auxTemp->pair->key, auxParent->pair->key)) {
                 auxParent->left = child;
-            }
-            else{
+            } else {
                 auxParent->right = child;
             }
-        }
-        else{
+        } else {
             tree->root = child;
         }
         free(auxTemp);
     }
-    else{
-        TreeNode* succesor = minimum(auxTemp->right);
-        removeNode(tree, succesor);
-
-        succesor->parent = auxTemp->parent;
-
-        if (auxTemp->parent == NULL){
-            tree->root = succesor;
-        } else if (auxTemp == auxTemp->parent->left){
-            auxTemp->parent->left = succesor;
-        } else {
-            auxTemp->parent->right = succesor;
-        }
-
-        if (succesor->right != NULL){
-            succesor->right->parent = succesor;
-        }
         
-        auxTemp->pair->key = succesor->pair->key;
-        auxTemp->pair->value = succesor->pair->value;
+    else {
+        TreeNode* successor = minimum(auxTemp->right);
+        removeNode(tree, successor);
+        successor->parent = auxTemp->parent;
+        if (auxTemp->parent == NULL) {
+            tree->root = successor;
+        } else if (auxTemp == auxTemp->parent->left) {
+            auxTemp->parent->left = successor;
+        } else {
+            auxTemp->parent->right = successor;
+        }
+
+        auxTemp->pair->key = successor->pair->key;
+        auxTemp->pair->value = successor->pair->value;
+
+        free(successor);
     } 
 }
+
 
     
     // TreeNode* auxTemp = tree->root;
