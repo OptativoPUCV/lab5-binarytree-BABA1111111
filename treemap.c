@@ -203,7 +203,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         else{
             child = auxTemp->right;
         }
-        if (auxTemp != NULL{
+        if (auxTemp != NULL){
             if (auxParent->left == auxTemp){
                 auxParent->left = child;
             }
