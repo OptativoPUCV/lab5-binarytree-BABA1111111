@@ -145,7 +145,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
             child = auxTemp->right;
         }
             
-        if (auxParent != NULL){
+        if (auxTemp != tree->root){
             if (auxParent->left == auxTemp){
                 auxParent->left = child;
             }
@@ -263,7 +263,8 @@ Pair * upperBound(TreeMap * tree, void* key) {
 }
 
 Pair * firstTreeMap(TreeMap * tree) {
-    return NULL;
+    TreeNode* auxFirst = minimum(tree->root);
+    return auxFirst->pair;
 }
 
 Pair * nextTreeMap(TreeMap * tree) {
