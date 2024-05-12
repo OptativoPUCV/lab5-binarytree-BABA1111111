@@ -163,6 +163,14 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         removeNode(tree, succesor);
 
         succesor->parent = auxTemp->parent;
+
+        if (auxTemp->parent == NULL){
+            tree->root = succesor;
+        } else if (auxTemp == auxTemp->parent->left){
+            auxTemp->parent->left = succesor;
+        } else {
+            auxTemp->parent->right = succesor;
+        }
         
         auxTemp->pair->key = succesor->pair->key;
         auxTemp->pair->value = succesor->pair->value;
