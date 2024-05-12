@@ -145,7 +145,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
             child = auxTemp->right;
         }
             
-        if (auxTemp != tree->root){
+        if (!is_equal(tree, auxTemp->pair->key, tree->root->pair->key)){
             if (auxParent->left == auxTemp){
                 auxParent->left = child;
             }
