@@ -134,7 +134,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         }
         free(auxTemp);
     }
-
+        
     else if (auxTemp->left == NULL || auxTemp->right == NULL){
         TreeNode* child;
 
@@ -144,7 +144,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         else{
             child = auxTemp->right;
         }
-        if (auxTemp != NULL){
+        if (auxTemp != tree->root){
             if (auxParent->left == auxTemp){
                 auxParent->left = child;
             }
@@ -162,7 +162,69 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         eraseTreeMap(tree, succesor->pair->key);
         auxTemp->pair->key = succesor->pair->key;
         auxTemp->pair->value = succesor->pair->value;
-    }     
+    } 
+
+
+    
+    // TreeNode* auxTemp = tree->root;
+    // TreeNode* auxParent = NULL;
+
+    // while( auxTemp != NULL && auxTemp != node){
+    //     auxParent = auxTemp;
+    //     if (node->pair->key < auxTemp->pair->key){
+    //         auxTemp = auxTemp->left;
+    //     } else {
+    //         auxTemp = auxTemp->right;
+    //     }
+    // }
+
+    // if (auxTemp == NULL){
+    //     return;
+    // }
+
+    // if (auxTemp->left == NULL && auxTemp->right == NULL){
+    //     if (auxTemp != tree->root){
+    //         if (auxParent->left == auxTemp){
+    //             auxParent->left = NULL;
+    //         }
+    //         else{
+    //             auxParent->right = NULL;
+    //         }
+    //     }
+    //     else{
+    //         tree->root = NULL;
+    //     }
+    //     free(auxTemp);
+    // }
+
+    // else if (auxTemp->left == NULL || auxTemp->right == NULL){
+    //     TreeNode* child;
+
+    //     if (auxTemp->left != NULL){
+    //         child = auxTemp->left;
+    //     }
+    //     else{
+    //         child = auxTemp->right;
+    //     }
+    //     if (auxTemp != NULL){
+    //         if (auxParent->left == auxTemp){
+    //             auxParent->left = child;
+    //         }
+    //         else{
+    //             auxParent->right = child;
+    //         }
+    //     }
+    //     else{
+    //         tree->root = child;
+    //     }
+    //     free(auxTemp);
+    // }
+    // else{
+    //     TreeNode* succesor = minimum(auxTemp->right);
+    //     eraseTreeMap(tree, succesor->pair->key);
+    //     auxTemp->pair->key = succesor->pair->key;
+    //     auxTemp->pair->value = succesor->pair->value;
+    // }     
 }
 
 void eraseTreeMap(TreeMap * tree, void* key){
