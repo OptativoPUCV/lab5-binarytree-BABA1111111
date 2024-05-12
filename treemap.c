@@ -160,7 +160,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
     }
     else{
         TreeNode* succesor = minimum(auxTemp->right);
-        removeNode(tree, succesor->pair->key);
+        removeNode(tree, succesor);
         auxTemp->pair->key = succesor->pair->key;
         auxTemp->pair->value = succesor->pair->value;
     } 
