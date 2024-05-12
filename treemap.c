@@ -144,7 +144,8 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         else{
             child = auxTemp->right;
         }
-        if (auxTemp != tree->root){
+            
+        if (auxParent != NULL){
             if (auxParent->left == auxTemp){
                 auxParent->left = child;
             }
@@ -163,7 +164,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         auxTemp->pair->key = succesor->pair->key;
         auxTemp->pair->value = succesor->pair->value;
     } 
-
+}
 
     
     // TreeNode* auxTemp = tree->root;
@@ -225,7 +226,7 @@ void removeNode(TreeMap * tree, TreeNode* node) {
     //     auxTemp->pair->key = succesor->pair->key;
     //     auxTemp->pair->value = succesor->pair->value;
     // }     
-}
+//}
 
 void eraseTreeMap(TreeMap * tree, void* key){
     if (tree == NULL || tree->root == NULL) return;
